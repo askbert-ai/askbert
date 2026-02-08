@@ -72,6 +72,20 @@ export default function Page() {
 		}
 
 	}
+
+	const scrollToTop = () => {
+		if (typeof window !== 'undefined') { // Check if running in the browser
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth' // For a smooth scrolling effect
+			});
+		}
+	};
+
+	useEffect(() => {
+		scrollToTop()
+	}, [currentStep])
+
 	const [email, setEmail] = useState("");
 
 	const saveCampaign = async () => {
@@ -106,7 +120,7 @@ export default function Page() {
 			updateCampaignId(data[0].id);
 		}
 	}
-
+	const [alert, setAlert] = useState(false)
 	const updateEmailCampain = async (e: React.FormEvent) => {
 		e.preventDefault(); // Mencegah reload halaman
 
@@ -116,8 +130,12 @@ export default function Page() {
 				.update({ email: email })
 				.eq('id', campaignId)
 
-			alert(`Berhasil mengirim ke: ${email}`);
+			// alert(`Berhasil mengirim ke: ${email}`);
 			setEmail(""); // Langsung clear input setelah sukses
+			setAlert(true)
+			setTimeout(() => {
+				setAlert(false)
+			}, 5000);
 		}
 	}
 
@@ -141,7 +159,7 @@ export default function Page() {
 		if (currentStep == 6) {
 			const timer = setTimeout(() => {
 				setOpen(true) // Ganti dengan URL tujuan
-			}, 5000);
+			}, 10000);
 			return () => clearTimeout(timer);
 		}
 
@@ -213,9 +231,14 @@ export default function Page() {
 					</div>
 					<div className='flex flex-row items-center mr-4'>
 						<Dialog open={open} onOpenChange={handleAsyncAction}>
-							<DialogTrigger asChild>
+								{
+									currentStep == 6 ?
+									<DialogTrigger asChild>
 								<Button className='h-fit rounded bg-[#C1FF72] text-black font-semibold py-2 px-6 hover:bg-[#C1FF72] mr-12'>Export Analysis</Button>
 							</DialogTrigger>
+							: ''
+								}
+							
 							<DialogContent className='rounded-xl p-0 ring-0 min-w-5xl'>
 								<DialogTitle className=''>
 									<div className='flex flex-row justify-between'>
@@ -240,7 +263,7 @@ export default function Page() {
 														) : ''
 												}
 											</div>
-											<p className='text-2xl font-semibold mt-9'>Christmast Campaign 2025</p>
+											<p className='text-2xl font-semibold mt-9'>Christmas Campaign 2025</p>
 											<p className='text-xs font-semibold text-[#91A0B6] mt-4'>CHOSEN SUGGESTED AUDIENCE</p>
 											<div className='flex gap-3.5 flex-wrap mt-4'>
 												<div className='px-4 py-2.5 bg-[#F1EBFF] rounded-full border-[##CEC4EC] border'>
@@ -258,17 +281,14 @@ export default function Page() {
 											</div>
 										</div>
 										<div className='flex flex-col p-9 bg-primary rounded-r-xl font-normal text-base max-w-1/2'>
-
 											<div className='flex flex-row items-center mb-3 mt-16'>
 												<Sparkles size={16} color='#615C8B' />
 												<p className='text-[#A894E2] text-xs ml-2'>ADVANCED ANALYSIS</p>
 											</div>
 											<p className='text-4xl font-semibold mb-2'>Want a Real Analysis of Your Creative?</p>
 											<p className='text-[#615C8B] mb-16'>We’re currently running hands-on reviews using our internal tooling.</p>
-											<p className='text-xs mb-2'>Share your email and we will ask Bert what he thinks!</p>
-
+											<p className='text-xs mb-2'>Share your email and we will Ask Bert what he thinks!</p>
 											<form onSubmit={updateEmailCampain} className="flex flex-col gap-3">
-
 												<FieldGroup>
 													<Field>
 														<InputGroup className='h-12 p-4 has-[[data-slot=input-group-control]:focus-visible]:ring-0 has-[[data-slot=input-group-control]:focus-visible]:border-none has-[[data-slot=input-group-control]:focus-visible]:shadow-0 bg-white ring-0 border-none'>
@@ -282,9 +302,10 @@ export default function Page() {
 															</InputGroupAddon>
 														</InputGroup>
 													</Field>
-													<Button type="submit" className='h-fit w-full mt-6 mb-28 rounded-md bg-[#C1FF72] text-black font-semibold py-3.5 px-6 hover:bg-[#C1FF72] mr-12'>Submit to Ask Bert<ArrowRight size={24} /></Button>
+													<Button type="submit" className='h-fit w-full mb-8 rounded-md bg-[#C1FF72] text-black font-semibold py-3.5 px-6 hover:bg-[#C1FF72] mr-12'>Submit to Ask Bert<ArrowRight size={24} /></Button>
 												</FieldGroup>
 											</form>
+											<p className={`self-center ${alert ? 'opacity-100' : 'opacity-0'}`}>“Thank you! We are gearing up.”</p>
 										</div>
 									</div>
 								</DialogTitle>
@@ -303,7 +324,6 @@ export default function Page() {
 							alt="Askbert.ai"
 							width={40}
 							height={40}
-							quality={100}
 						/>
 					</div>
 
@@ -316,7 +336,7 @@ export default function Page() {
 								<StepPage />
 								<div className={`flex justify-between min-w-full`}>
 									{
-										currentStep > 0 && currentStep < 4 ?
+										currentStep > 0 && currentStep < 5 ?
 											<Button onClick={handlePrev} variant="outline" disabled={disabledPrev} className={` mt-16 ${disabledPrev ? 'bg-[#E8ECF3]' : ''} px-6 py-3 place-self-end`}>
 												<MoveLeft className='mr-6' /> Back
 											</Button>
@@ -462,7 +482,6 @@ export default function Page() {
 													alt="Askbert.ai"
 													width={36}
 													height={36}
-													quality={100}
 												/>
 											</div>
 											<div className='max-w-54'>

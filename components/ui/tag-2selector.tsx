@@ -37,8 +37,8 @@ const Tag2Selector: React.FC = () => {
 
 	return (
 		<div className="px-52">
-			<p className="mb-2 text-[#475569]">Secondary</p>
-			{/* <p className="mb-4 text-sm text-gray-500">Pilih maksimal {MAX_SELECTIONS} tag.</p> */}
+			<p className=" text-[#475569]">Secondary</p>
+			<p className="text-xs mb-2 font-normal text-[#91A0B6] italic">Please select up to 2 secondary audience segments</p>
 
 			<div className="flex flex-wrap gap-3">
 				{allTags.map(tag => (

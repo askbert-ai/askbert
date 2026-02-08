@@ -18,7 +18,6 @@ export default function StepPage() {
 		updateCurrentStep(currentStep + 1)
 		updateHideButton(false)
 		updateDisabledNext(true)
-		console.log({ secondaryAudience })
 	}
 	if (currentStep == 1) {
 		return (
@@ -46,7 +45,7 @@ export default function StepPage() {
 							</Card>
 						</TooltipTrigger>
 						<TooltipContent>
-							<p>Only Use A Suggested Audience type for this demo</p>
+							<p>Please "Choose a Suggested Audience" for this demo</p>
 						</TooltipContent>
 					</Tooltip>
 					<Tooltip>
@@ -66,7 +65,7 @@ export default function StepPage() {
 							</Card>
 						</TooltipTrigger>
 						<TooltipContent>
-							<p>Only Use A Suggested Audience type for this demo</p>
+							<p>Please "Choose a Suggested Audience" for this demo</p>
 						</TooltipContent>
 					</Tooltip>
 					<Card onClick={handleClickCard} size="sm" className="w-fit max-w-[254] hover:bg-primary/50 py-6 px-0 h-fit group">
@@ -95,9 +94,8 @@ export default function StepPage() {
 					<span className="text-4xl font-bold text-black">Who is this for?</span>
 					<span>Choose a suggested audience type</span>
 				</div>
-				<div className="flex flex-col justify-self-start ml-[269] mb-4 mt-[64]">
+				<div className="flex flex-col justify-self-start px-52 mb-4 mt-[64]">
 					<p className="text-xl font-normal text-black">Suggested Audience Type</p>
-					<p className="text-xs font-normal text-[#91A0B6] italic">Please select 1 primary and 2 secondary keywords</p>
 				</div>
 				<TagSelector />
 				<Tag2Selector />

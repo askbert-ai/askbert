@@ -31,7 +31,8 @@ const { updatePrimaryAudience, primaryAudience, secondaryAudience} = useContentC
 
 	return (
 		<div className="px-52 mb-4">
-			<p className="mb-2 text-[#475569]">Primary</p>
+			<p className="text-[#475569]">Primary</p>
+			<p className="text-xs mb-2 font-normal text-[#91A0B6] italic">Please select 1 primary audience segment</p>
 			<div className="flex flex-wrap gap-3">
 				{allTags.map(tag => (
 					<TagButton
