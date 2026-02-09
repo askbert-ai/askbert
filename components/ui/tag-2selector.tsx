@@ -36,7 +36,7 @@ const Tag2Selector: React.FC = () => {
 	};
 
 	return (
-		<div className="px-52">
+		<div className="md:px-52">
 			<p className=" text-[#475569]">Secondary</p>
 			<p className="text-xs mb-2 font-normal text-[#91A0B6] italic">Please select up to 2 secondary audience segments</p>
 

@@ -211,7 +211,7 @@ export default function Page() {
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				<header className="sticky top-0 bg-white flex justify-between h-16 shrink-0 items-center gap-2 border-b px-4">
+				<header className="sticky top-0 bg-white flex justify-between h-16 shrink-0 items-center gap-2 border-b px-4 z-10">
 					<div className='flex flex-row items-center'>
 						<SidebarTrigger className="-ml-1" />
 						<Separator orientation="vertical" className="mr-4" />
@@ -330,22 +330,22 @@ export default function Page() {
 				</header>
 				{
 					currentStep != 6 ?
-						<div className="flex flex-1 flex-col gap-4 p-6 bg-[#FDFDFE]">
-							<div className="min-h-screen p-9 bg-white justify-items-center sm:p-16 flex-1 rounded-xl md:min-h-min shadow-[0_4px_24px_0_rgba(0,0,0,0.05)]">
+						<div className="flex flex-1 flex-col gap-4 p-4 md:p-6 bg-[#FDFDFE]">
+							<div className="min-h-screen p-6 md:p-9 bg-white justify-items-center sm:p-16 flex-1 rounded-xl md:min-h-min shadow-[0_4px_24px_0_rgba(0,0,0,0.05)]">
 								<ProgressSteps steps={steps} currentStep={currentStep} />
 								<StepPage />
 								<div className={`flex justify-between min-w-full`}>
 									{
 										currentStep > 0 && currentStep < 5 ?
-											<Button onClick={handlePrev} variant="outline" disabled={disabledPrev} className={` mt-16 ${disabledPrev ? 'bg-[#E8ECF3]' : ''} px-6 py-3 place-self-end`}>
-												<MoveLeft className='mr-6' /> Back
+											<Button onClick={handlePrev} variant="outline" disabled={disabledPrev} className={`mt-16 ${disabledPrev ? 'bg-[#E8ECF3]' : ''} px-4 md:px-6 py-3 place-self-end`}>
+												<MoveLeft className='mr-2 md:mr-6' /> Back
 											</Button>
 											: <div></div>
 									}
 									{
 										!hideButton ?
-											<Button onClick={handleNext} variant="secondary" disabled={disabledNext} className={`mt-16 ${disabledNext ? 'bg-[#E8ECF3]' : 'bg-[#C1FF72] hover:bg-[#C1FF72]/70'} px-6 py-3 place-self-end`}>
-												{currentStep == 4 ? 'Start Analyzing' : 'Next'} <MoveRight className='ml-6' />
+											<Button onClick={handleNext} variant="secondary" disabled={disabledNext} className={`mt-16 ${disabledNext ? 'bg-[#E8ECF3]' : 'bg-[#C1FF72] hover:bg-[#C1FF72]/70'} px-4 md:px-6 py-3 place-self-end`}>
+												{currentStep == 4 ? 'Start Analyzing' : 'Next'} <MoveRight className='ml-2 md:ml-6' />
 											</Button>
 											: <></>
 									}
@@ -396,7 +396,7 @@ export default function Page() {
 										</div>
 									</div>
 									:
-									<div className='fixed bottom-0 right-80 h-96 w-80 shadow rounded-t-xl'>
+									<div className='fixed bottom-0 right-80 h-96 w-80 shadow rounded-t-xl bg-white'>
 										<div className='flex h-full flex-col justify-between pb-3'>
 											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 rounded-t-xl px-6 py-4'>
 												<div className='flex flex-row items-center'>
@@ -430,7 +430,7 @@ export default function Page() {
 												</div>
 												<div className='flex flex-row items-start mt-2.5 mb-4 pl-12 gap-4'>
 													<Button onClick={onSubscribeChat} className='h-fit bg-primary text-[10px] text-[#615C8B] font-bold py-3 hover:bg-primary'>OPTIMIZE NOW</Button>
-													<Button className='h-fit bg-[#EFF4F8] text-[10px] text-[#615C8B] font-bold py-3 hover:bg-[#EFF4F8]'>DISMISS</Button>
+													<Button onClick={onHideChat} className='h-fit bg-[#EFF4F8] text-[10px] text-[#615C8B] font-bold py-3 hover:bg-[#EFF4F8]'>DISMISS</Button>
 												</div>
 											</ScrollArea>
 											<div>

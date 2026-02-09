@@ -12,7 +12,7 @@ interface TagButtonProps {
 const TagButton: React.FC<TagButtonProps> = ({ tag, isSelected, onClick, variant, disabled }) => {
   // Gunakan gaya untuk mencocokkan tampilan di gambar: 
   // Putih polos saat tidak dipilih, ungu terang saat dipilih.
-  const baseClasses = "px-6 py-3 rounded-full border cursor-pointer transition-colors duration-200 font-light text-base";
+  const baseClasses = "px-2.5 py-1.5 md:px-6 md:py-3 rounded-full border cursor-pointer transition-colors duration-200 font-light md:text-base text-sm";
   
   const selectedClasses = `${variant == 'primary' ? 'bg-[#F1EBFF] text-[#615C8B] border-[#CEC4EC]' : 'bg-[#EFFFDC] text-[#729842] border-[#C1FF72]'} `;
   const defaultClasses = "bg-white text-[#91A0B6] border-[#E8ECF3] hover:bg-gray-50";

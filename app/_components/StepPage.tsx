@@ -19,15 +19,23 @@ export default function StepPage() {
 		updateHideButton(false)
 		updateDisabledNext(true)
 	}
+
+	const handleItemClick = (item: string) => {
+		updatePrimaryObjective(item)
+		if (primaryObjective == '') {
+			updateDisabledNext(false)
+		}
+	}
+
 	if (currentStep == 1) {
 		return (
 			<>
 				<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
-					<span className="text-xl font-normal">Step 2 :</span>
-					<span className="text-4xl font-bold text-black">Who is this for?</span>
+					<span className="text-xl md:text-md font-normal">Step 2 :</span>
+					<span className="text-2xl md:text-4xl font-bold text-black">Who is this for?</span>
 					<span>Find your people.</span>
 				</div>
-				<div className='flex gap-[94]'>
+				<div className='flex flex-col md:flex-row gap-6 md:gap-[94]'>
 					<Tooltip>
 						<TooltipTrigger>
 							<Card size="sm" className="w-fit max-w-[254] bg-gray-50 py-6 px-5 h-fit">
@@ -90,11 +98,11 @@ export default function StepPage() {
 		return (
 			<>
 				<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
-					<span className="text-xl font-normal">Step 2 :</span>
-					<span className="text-4xl font-bold text-black">Who is this for?</span>
+					<span className="text-xl md:text-md font-normal">Step 2 :</span>
+					<span className="text-2xl md:text-4xl font-bold text-black">Who is this for?</span>
 					<span>Choose a suggested audience type</span>
 				</div>
-				<div className="flex flex-col justify-self-start px-52 mb-4 mt-[64]">
+				<div className="flex flex-col justify-self-start md:px-52 mb-4 mt-[64]">
 					<p className="text-xl font-normal text-black">Suggested Audience Type</p>
 				</div>
 				<TagSelector />
@@ -102,16 +110,17 @@ export default function StepPage() {
 			</>
 		)
 	}
+
 	if (currentStep == 3) {
 		return (
 			<>
 				<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
-					<span className="text-xl font-normal">Step 3 :</span>
-					<span className="text-4xl font-bold text-black">Where is your ad running?</span>
+					<span className="text-xl md:text-md font-normal">Step 3 :</span>
+					<span className="text-2xl md:text-4xl font-bold text-black text-center">Where is your ad running?</span>
 					<span>Check all that applies.</span>
 				</div>
 
-				<div className="flex gap-24 min-w-[664]">
+				<div className="flex gap-12 md:gap-24 md:min-w-[664]">
 
 					<div key='Platforms' className="flex-1 min-w-0">
 						<p className='font-semibold mb-6'>Platforms</p>
@@ -215,22 +224,13 @@ export default function StepPage() {
 		)
 	}
 
-
-
-	const handleItemClick = (item: string) => {
-		updatePrimaryObjective(item)
-		if (primaryObjective == '') {
-			updateDisabledNext(false)
-		}
-	}
-
 	if (currentStep == 4) {
 		return (
 			<>
 				<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
-					<span className="text-xl font-normal">Step 4 :</span>
-					<span className="text-4xl font-bold text-black">Choose your primary objective:</span>
-					<span>Each objective optimizes for different outcomes. Choose the one that best reflects your intent for this asset.</span>
+					<span className="text-xl md:text-md font-normal">Step 4 :</span>
+					<span className="text-2xl md:text-4xl font-bold text-black text-center">Choose your primary objective:</span>
+					<span className='text-center'>Each objective optimizes for different outcomes. Choose the one that best reflects your intent for this asset.</span>
 				</div>
 				<div className='flex flex-col gap-9'>
 					<AccordionItem
@@ -246,21 +246,21 @@ export default function StepPage() {
 							<div className='flex flex-row justify-between gap-2'>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Audience Trust Index</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Friction Index</p>
 									</div>
 								</div>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Value Clarity</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Effort Heuristic</p>
 									</div>
 								</div>
@@ -280,21 +280,21 @@ export default function StepPage() {
 							<div className='flex flex-row justify-between gap-2'>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Abstraction Overload</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Identity Resolution</p>
 									</div>
 								</div>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Narrative Fatigue</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Weak Signaling</p>
 									</div>
 								</div>
@@ -314,21 +314,21 @@ export default function StepPage() {
 							<div className='flex flex-row justify-between gap-2'>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Brand Alignment Score</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Identity Collapse Index</p>
 									</div>
 								</div>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Voice Drift</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Cognitive Reach vs. Creative Risk</p>
 									</div>
 								</div>
@@ -348,21 +348,21 @@ export default function StepPage() {
 							<div className='flex flex-row justify-between gap-2'>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Audience Ambiguity Tolerance</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Context Collapse Risk</p>
 									</div>
 								</div>
 								<div className='flex flex-col w-full gap-2'>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Aesthetic Load</p>
 									</div>
 									<div className='flex flex-row items-center bg-white border-[#E2D7FE]/50 border rounded-md px-3 py-2.5'>
-										<div className='h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
+										<div className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#615C8B] mr-2'></div>
 										<p className='text-xs'>Audience Polarization</p>
 									</div>
 								</div>
@@ -449,9 +449,9 @@ export default function StepPage() {
 	return (
 		<>
 			<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
-				<span className="text-xl font-normal">Step 1 :</span>
-				<span className="text-4xl font-bold text-black">Upload a Creative Asset</span>
-				<span>Vet your content before you spend a single dollar.</span>
+				<span className="text-xl md:text-md font-normal">Step 1 :</span>
+				<span className="text-2xl md:text-4xl font-bold text-black">Upload a Creative Asset</span>
+				<span className='text-center'>Vet your content before you spend a single dollar.</span>
 			</div>
 			<UploadComponent />
 		</>
@@ -472,20 +472,20 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, children, isOpen, 
 	return (
 		<div onClick={onClick} className={`flex flex-col shadow rounded-md border ${isOpen ? 'border-[#E2D7FE]' : 'border-[#EFF4F8]'}`}>
 			<div className='flex flex-row items-center p-4 justify-between'>
-				<div className='flex flex-row items-center mr-14'>
-					<div className={`${isOpen ? 'bg-[#E2D7FE]' : 'bg-[#D2D2D2]/15'} p-3.5 rounded-md mr-6`}>
+				<div className='flex flex-row items-center '>
+					<div className={`${isOpen ? 'bg-[#E2D7FE]' : 'bg-[#D2D2D2]/15'} p-3.5 rounded-md mr-3 md:mr-6`}>
 						{/* <TrendingUp size={36} color="#91A0B6" /> */}
 						{
 							isOpen ? iconActive : icon
 						}
 					</div>
-					<p className='text-2xl font-semibold'>{title}</p>
+					<p className='text-lg md:text-2xl font-semibold'>{title}</p>
 				</div>
 				{
 					isOpen ?
-						<div className='flex bg-[#E2D7FE] border rounded-full h-8 w-8 justify-center justify-items-center items-center'><Check size={16} color="#615C8B" strokeWidth={3} /></div>
+						<div className='flex shrink-0 bg-[#E2D7FE] border rounded-full h-6 w-6 md:h-8 md:w-8 justify-center justify-items-center items-center'><Check size={16} color="#615C8B" strokeWidth={3} /></div>
 						:
-						<div className='border-[#E8ECF3] border rounded-full bg-white h-8 w-8'></div>
+						<div className='shrink-0 border-[#E8ECF3] border rounded-full bg-white h-6 w-6 md:h-8 md:w-8'></div>
 				}
 
 			</div>
