@@ -26,7 +26,7 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, BotMessageSquare, ChevronDown, CloudUpload, Gem, House, Mail, MoveLeft, MoveRight, SendHorizontal, Sparkles, UsersRound, X } from 'lucide-react';
+import { ArrowRight, BotMessageSquare, ChevronDown, ChevronUp, CloudUpload, Gem, House, Mail, MoveLeft, MoveRight, SendHorizontal, Sparkles, UsersRound, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import StepPage from './_components/StepPage';
@@ -231,14 +231,14 @@ export default function Page() {
 					</div>
 					<div className='flex flex-row items-center mr-4'>
 						<Dialog open={open} onOpenChange={handleAsyncAction}>
-								{
-									currentStep == 6 ?
+							{
+								currentStep == 6 ?
 									<DialogTrigger asChild>
-								<Button className='h-fit rounded bg-[#C1FF72] text-black font-semibold py-2 px-6 hover:bg-[#C1FF72] mr-12'>Export Analysis</Button>
-							</DialogTrigger>
-							: ''
-								}
-							
+										<Button className='h-fit rounded bg-[#C1FF72] text-black font-semibold py-2 px-6 hover:bg-[#C1FF72] mr-12'>Export Analysis</Button>
+									</DialogTrigger>
+									: ''
+							}
+
 							<DialogContent className='rounded-xl p-0 ring-0 max-w-11/12 lg:min-w-5xl'>
 								<DialogTitle className=''>
 									<div className='flex flex-col lg:flex-row justify-between'>
@@ -326,6 +326,7 @@ export default function Page() {
 							height={40}
 						/>
 					</div>
+
 				</header>
 				{
 					currentStep != 6 ?
@@ -353,8 +354,8 @@ export default function Page() {
 							</div>
 						</div>
 						:
-						<div className="flex h-full bg-[#FDFDFE]">
-							<div className='flex flex-col p-6 mr-80'>
+						<div className="flex flex-col md:flex-row justify-between h-full bg-[#FDFDFE]">
+							<div className='flex flex-col p-6'>
 								<div className='flex flex-row gap-12 mb-9'>
 									<div>
 										<p className='font-semibold'>Platform :</p>
@@ -385,82 +386,8 @@ export default function Page() {
 								}
 								<Button onClick={() => window.location.reload()} className='h-fit bg-[#C1FF72] text-black py-3 hover:bg-[#C1FF72] mt-6'><CloudUpload size={24} /> New Upload</Button>
 							</div>
-
-							{
-								hideChat ?
-
-									<div onClick={onHideChat} className='fixed bottom-4 right-80'>
-										<div className='p-3 rounded-full bg-primary mr-3'>
-											<BotMessageSquare size={32} color='#615C8B' />
-										</div>
-									</div>
-									:
-									<div className='fixed bottom-0 right-80 h-96 w-80 shadow rounded-t-xl bg-white'>
-										<div className='flex h-full flex-col justify-between pb-3'>
-											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 rounded-t-xl px-6 py-4'>
-												<div className='flex flex-row items-center'>
-													<div className='p-1.5 rounded-full bg-primary mr-3'>
-														<BotMessageSquare size={24} color='#615C8B' />
-													</div>
-													<p className='font-semibold'>Bert AI</p>
-												</div>
-												<ChevronDown onClick={onHideChat} size={24} color='#91A0B6' />
-											</div>
-											<ScrollArea className='h-56 px-2'>
-												<div className='flex flex-row items-start mb-6'>
-													<div className='p-2 rounded-full bg-primary/25 mr-3'>
-														<BotMessageSquare size={24} color='#615C8B' />
-													</div>
-													<div className='text-xs text-[#475569] bg-[#F9FAFC] p-2 rounded-b-lg rounded-tr-lg'>
-														<p>Good job! <b className='text-black'>Hesitation Index</b> is healthy for this creative, meaning people are likely to NOT hesitate to engage with your ad! <br /><br />
-															Your Identity Resolution is at 70%. While recognition is high, aspiration is lagging. To hit the 100% Target Resolution for Cultural Brokers, consider :<br /><br />
-															1. Increasing visual fidelity to match design-forward expectations.<br />
-															2. Increase Narrative Novelty (currently at 58%) to decrease audience fatigue.
-														</p>
-													</div>
-												</div>
-												<div className='flex flex-row items-start'>
-													<div className='p-2 rounded-full bg-primary/25 mr-3'>
-														<BotMessageSquare size={24} color='#615C8B' />
-													</div>
-													<div className='text-xs text-[#475569] bg-[#F9FAFC] p-2 rounded-b-lg rounded-tr-lg'>
-														<p><b>Analysis Summary</b> : The asset shows medium identity resolution among Culture Brokers, indicating a neutral signal that may lack controversial edge. Narrative fatigue is currently quite high. Would you like recommendations to optimize this before running?</p>
-													</div>
-												</div>
-												<div className='flex flex-row items-start mt-2.5 mb-4 pl-12 gap-4'>
-													<Button onClick={onSubscribeChat} className='h-fit bg-primary text-[10px] text-[#615C8B] font-bold py-3 hover:bg-primary'>OPTIMIZE NOW</Button>
-													<Button onClick={onHideChat} className='h-fit bg-[#EFF4F8] text-[10px] text-[#615C8B] font-bold py-3 hover:bg-[#EFF4F8]'>DISMISS</Button>
-												</div>
-											</ScrollArea>
-											<div>
-												<Separator />
-												<div className='flex flex-row items-center mx-4 mt-3 bg-[#F9FAFC] rounded pr-2'>
-													<Textarea className='[&::-webkit-scrollbar]:hidden resize-none mr-2 shadow-none h-16 border-none focus-visible:ring-0' />
-													<SendHorizontal size={24} color='#CEC4EC' />
-												</div>
-											</div>
-
-										</div>
-										<div className={`absolute bottom-0 right-0 z-2 backdrop-blur-sm w-80 h-full ${subscribeChat ? 'w-80 h-full' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-											<div className='flex h-full flex-col justify-end pb-11 px-3 z-11'>
-												<div className='flex flex-col bg-[#F8F5FF] p-4 rounded-xl shadow-lg'>
-													<div className='flex flex-row justify-between'>
-														<div className='bg-primary px-2 py-1 rounded-full w-fit mb-4'>
-															<p className='text-[#615C8B] text-[10px]'>PRO FEATURE</p>
-														</div>
-														<Button onClick={onSubscribeChat} className='h-fit w-fit bg-primary p-1 hover:bg-primary rounded-full'><X size={16} color='#615C8B' /></Button>
-													</div>
-													<p className='text-2xl font-bold mb-2'>Unlock Full Access</p>
-													<p className='text-[10px] text-[#615C8B] mb-6'>View detailed performance for Revenue Impact, Brand Equity, and New Audience Activation.</p>
-													<Button className='h-fit bg-primary text-[#615C8B] py-3 hover:bg-primary'>Upgrade to Pro — $49/mo</Button>
-												</div>
-											</div>
-										</div>
-									</div>
-							}
-
-
-							<div className='fixed bg-white right-0 bottom-0 top-16 w-80 border-l'>
+							{/* <div className='fixed bg-white right-0 bottom-0 top-16 w-80 border-l'> */}
+							<div className='flex md:max-h-[calc(100vh-var(--spacing)*16)] bottom-0 top-16 bg-white  md:w-80 md:border-l'>
 								{/* h-full */}
 								<ScrollArea className="h-full">
 									<div className='flex flex-col px-3 pt-3'>
@@ -594,7 +521,7 @@ export default function Page() {
 										{/* end */}
 									</div>
 								</ScrollArea>
-								<div className={`absolute bottom-0 right-0 z-2 backdrop-blur-sm w-80 h-full ${subscribe ? 'w-80 h-full' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+								<div className={`absolute bottom-0 right-0 z-2 backdrop-blur-sm ${subscribe ? 'md:w-80 h-full' : 'max-h-0 opacity-0 overflow-hidden'}`}>
 									<div className='flex h-full flex-col justify-end pb-11 px-3 z-11'>
 										<div className='flex flex-col bg-[#F8F5FF] p-4 rounded-xl shadow-lg'>
 											<div className='flex flex-row justify-between'>
@@ -610,6 +537,92 @@ export default function Page() {
 									</div>
 								</div>
 							</div>
+							{
+								hideChat ?
+
+									<div onClick={onHideChat} className='sticky md:fixed w-full md:w-fit bottom-2 overflow-hidden right-0 md:bottom-4 md:right-80 '>
+										<div className='p-3 rounded-full bg-primary mr-3 hidden md:flex'>
+											<BotMessageSquare size={32} color='#615C8B' />
+										</div>
+										<div className='flex w-full flex-col justify-between md:hidden bg-white rounded-t-xl'>
+											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 rounded-t-xl px-6 py-4'>
+												<div className='flex flex-row items-center'>
+													<div className='p-1.5 rounded-full bg-primary mr-3'>
+														<BotMessageSquare size={24} color='#615C8B' />
+													</div>
+													<p className='font-semibold'>Bert AI</p>
+												</div>
+												<ChevronUp onClick={onHideChat} size={24} color='#91A0B6' />
+											</div>
+										</div>
+									</div>
+									:
+									<div className='fixed right-0 bottom-0 md:right-80 h-96 md:w-80 shadow px-3 md:px-0 md:bg-white'>
+										<div className='flex h-full flex-col justify-between pb-3 bg-white rounded-t-xl'>
+											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 rounded-t-xl px-6 py-4'>
+												<div className='flex flex-row items-center'>
+													<div className='p-1.5 rounded-full bg-primary mr-3'>
+														<BotMessageSquare size={24} color='#615C8B' />
+													</div>
+													<p className='font-semibold'>Bert AI</p>
+												</div>
+												<ChevronDown onClick={onHideChat} size={24} color='#91A0B6' />
+											</div>
+											<ScrollArea className='h-56 px-2'>
+												<div className='flex flex-row items-start mb-6'>
+													<div className='p-2 rounded-full bg-primary/25 mr-3'>
+														<BotMessageSquare size={24} color='#615C8B' />
+													</div>
+													<div className='text-xs text-[#475569] bg-[#F9FAFC] p-2 rounded-b-lg rounded-tr-lg'>
+														<p>Good job! <b className='text-black'>Hesitation Index</b> is healthy for this creative, meaning people are likely to NOT hesitate to engage with your ad! <br /><br />
+															Your Identity Resolution is at 70%. While recognition is high, aspiration is lagging. To hit the 100% Target Resolution for Cultural Brokers, consider :<br /><br />
+															1. Increasing visual fidelity to match design-forward expectations.<br />
+															2. Increase Narrative Novelty (currently at 58%) to decrease audience fatigue.
+														</p>
+													</div>
+												</div>
+												<div className='flex flex-row items-start'>
+													<div className='p-2 rounded-full bg-primary/25 mr-3'>
+														<BotMessageSquare size={24} color='#615C8B' />
+													</div>
+													<div className='text-xs text-[#475569] bg-[#F9FAFC] p-2 rounded-b-lg rounded-tr-lg'>
+														<p><b>Analysis Summary</b> : The asset shows medium identity resolution among Culture Brokers, indicating a neutral signal that may lack controversial edge. Narrative fatigue is currently quite high. Would you like recommendations to optimize this before running?</p>
+													</div>
+												</div>
+												<div className='flex flex-row items-start mt-2.5 mb-4 pl-12 gap-4'>
+													<Button onClick={onSubscribeChat} className='h-fit bg-primary text-[10px] text-[#615C8B] font-bold py-3 hover:bg-primary'>OPTIMIZE NOW</Button>
+													<Button onClick={onHideChat} className='h-fit bg-[#EFF4F8] text-[10px] text-[#615C8B] font-bold py-3 hover:bg-[#EFF4F8]'>DISMISS</Button>
+												</div>
+											</ScrollArea>
+											<div>
+												<Separator />
+												<div className='flex flex-row items-center mx-4 mt-3 bg-[#F9FAFC] rounded pr-2'>
+													<Textarea className='[&::-webkit-scrollbar]:hidden resize-none mr-2 shadow-none h-16 border-none focus-visible:ring-0' />
+													<SendHorizontal size={24} color='#CEC4EC' />
+												</div>
+											</div>
+
+										</div>
+										<div className={`absolute bottom-0 right-0 z-2 backdrop-blur-sm w-full md:w-80 h-full ${subscribeChat ? 'w-80 h-full' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+											<div className='flex h-full flex-col justify-end pb-11 px-3 z-11'>
+												<div className='flex flex-col bg-[#F8F5FF] p-4 rounded-xl shadow-lg'>
+													<div className='flex flex-row justify-between'>
+														<div className='bg-primary px-2 py-1 rounded-full w-fit mb-4'>
+															<p className='text-[#615C8B] text-[10px]'>PRO FEATURE</p>
+														</div>
+														<Button onClick={onSubscribeChat} className='h-fit w-fit bg-primary p-1 hover:bg-primary rounded-full'><X size={16} color='#615C8B' /></Button>
+													</div>
+													<p className='text-2xl font-bold mb-2'>Unlock Full Access</p>
+													<p className='text-[10px] text-[#615C8B] mb-6'>View detailed performance for Revenue Impact, Brand Equity, and New Audience Activation.</p>
+													<Button className='h-fit bg-primary text-[#615C8B] py-3 hover:bg-primary'>Upgrade to Pro — $49/mo</Button>
+												</div>
+											</div>
+										</div>
+									</div>
+							}
+
+
+
 						</div>
 				}
 
