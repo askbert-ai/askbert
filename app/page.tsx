@@ -239,22 +239,22 @@ export default function Page() {
 							: ''
 								}
 							
-							<DialogContent className='rounded-xl p-0 ring-0 min-w-5xl'>
+							<DialogContent className='rounded-xl p-0 ring-0 max-w-11/12 lg:min-w-5xl'>
 								<DialogTitle className=''>
-									<div className='flex flex-row justify-between'>
-										<div className='flex flex-col p-9 font-normal text-base min-w-1/2'>
+									<div className='flex flex-col lg:flex-row justify-between'>
+										<div className='flex flex-col p-4 lg:p-9 font-normal text-base lg:min-w-1/2'>
 											<div className='flex flex-col justify-center items-center bg-[#E8ECF3] rounded-xl'>
 												{
 													file && file.type.startsWith('image/') ? (
 														<img
 															src={URL.createObjectURL(file)}
 															alt="Preview"
-															className="max-h-[340] w-full object-contain rounded-lg"
+															className="max-h-40 lg:max-h-[340] w-full object-contain rounded-lg"
 															onLoad={() => URL.revokeObjectURL(URL.createObjectURL(file))} // Free memory
 														/>
 													)
 														: file && !file.type.startsWith('image/') ? (
-															<div className="max-h-[340] flex items-center justify-center bg-gray-100 rounded-lg">
+															<div className="max-h-40 lg:max-h-[340] flex items-center justify-center bg-gray-100 rounded-lg">
 																<video controls className="w-full max-h-[340] object-contain">
 																	<source src={URL.createObjectURL(file)} type={file.type} />
 																	Browser Anda tidak mendukung tag video.
@@ -263,49 +263,49 @@ export default function Page() {
 														) : ''
 												}
 											</div>
-											<p className='text-2xl font-semibold mt-9'>Christmas Campaign 2025</p>
-											<p className='text-xs font-semibold text-[#91A0B6] mt-4'>CHOSEN SUGGESTED AUDIENCE</p>
-											<div className='flex gap-3.5 flex-wrap mt-4'>
-												<div className='px-4 py-2.5 bg-[#F1EBFF] rounded-full border-[##CEC4EC] border'>
-													<p className='text-[#615C8B]'>{primaryAudience}</p>
+											<p className='text-base lg:text-2xl font-semibold mt-2 lg:mt-9'>Christmas Campaign 2025</p>
+											<p className='text-[10px] font-semibold text-[#91A0B6] mt-1.5 lg:mt-4'>CHOSEN SUGGESTED AUDIENCE</p>
+											<div className='flex flex-row gap-1 lg:gap-3.5 flex-wrap mt-1.5 lg:mt-4'>
+												<div className='px-3 py-1.5 lg:px-4 lg:py-2.5 bg-[#F1EBFF] rounded-full border-[##CEC4EC] border'>
+													<p className='text-[#615C8B] text-[10px] lg:text-base'>{primaryAudience}</p>
 												</div>
 												{
 													secondaryAudience.map((item) => {
 														return (
-															<div key={item} className='px-4 py-2.5 bg-[#F1EBFF] rounded-full border-[##CEC4EC] border'>
-																<p className='text-[#615C8B]'>{item}</p>
+															<div key={item} className='px-3 py-1.5 lg:px-4 lg:py-2.5 bg-[#F1EBFF] rounded-full border-[##CEC4EC] border'>
+																<p className='text-[#615C8B] text-[10px] lg:text-base'>{item}</p>
 															</div>
 														)
 													})
 												}
 											</div>
 										</div>
-										<div className='flex flex-col p-9 bg-primary rounded-r-xl font-normal text-base max-w-1/2'>
-											<div className='flex flex-row items-center mb-3 mt-16'>
+										<div className='flex flex-col p-4 lg:p-9 bg-primary rounded-b-xl lg:rounded-r-xl font-normal text-base lg:max-w-1/2'>
+											<div className='flex flex-row items-center mb-2 lg:mb-3 lg:mt-16'>
 												<Sparkles size={16} color='#615C8B' />
-												<p className='text-[#A894E2] text-xs ml-2'>ADVANCED ANALYSIS</p>
+												<p className='text-[#A894E2] text-[10px] lg:text-xs ml-2'>ADVANCED ANALYSIS</p>
 											</div>
-											<p className='text-4xl font-semibold mb-2'>Want a Real Analysis of Your Creative?</p>
-											<p className='text-[#615C8B] mb-16'>We’re currently running hands-on reviews using our internal tooling.</p>
-											<p className='text-xs mb-2'>Share your email and we will Ask Bert what he thinks!</p>
-											<form onSubmit={updateEmailCampain} className="flex flex-col gap-3">
-												<FieldGroup>
+											<p className='text-xl/tight lg:text-4xl font-semibold mb-0 md:mb-2'>Want a Real Analysis of Your Creative?</p>
+											<p className='text-[#615C8B] text-xs lg:text-base mb-6 lg:mb-16'>We’re currently running hands-on reviews using our internal tooling.</p>
+											<p className='text-[10px] md:text-xs mb-2'>Share your email and we will Ask Bert what he thinks!</p>
+											<form onSubmit={updateEmailCampain} className="flex flex-col lg:gap-3">
+												<FieldGroup className="gap-3 lg:gap-7">
 													<Field>
-														<InputGroup className='h-12 p-4 has-[[data-slot=input-group-control]:focus-visible]:ring-0 has-[[data-slot=input-group-control]:focus-visible]:border-none has-[[data-slot=input-group-control]:focus-visible]:shadow-0 bg-white ring-0 border-none'>
+														<InputGroup className='lg:h-12 p-2 lg:p-4 has-[[data-slot=input-group-control]:focus-visible]:ring-0 has-[[data-slot=input-group-control]:focus-visible]:border-none has-[[data-slot=input-group-control]:focus-visible]:shadow-0 bg-white ring-0 border-none'>
 															<InputGroupInput
 																required
 																value={email}
 																onChange={(e) => setEmail(e.target.value)}
-																type="email" id="input-group-url" placeholder="Type your email" />
+																type="email" id="input-group-url" placeholder="Type your email" className="text-sm" />
 															<InputGroupAddon>
 																<Mail size={16} />
 															</InputGroupAddon>
 														</InputGroup>
 													</Field>
-													<Button type="submit" className='h-fit w-full mb-8 rounded-md bg-[#C1FF72] text-black font-semibold py-3.5 px-6 hover:bg-[#C1FF72] mr-12'>Submit to Ask Bert<ArrowRight size={24} /></Button>
+													<Button type="submit" className='h-fit w-full lg:mb-8 rounded-md bg-[#C1FF72] text-black font-semibold py-2 lg:py-3.5 px-6 hover:bg-[#C1FF72] mr-12'>Submit to Ask Bert<ArrowRight size={24} /></Button>
 												</FieldGroup>
 											</form>
-											<p className={`self-center ${alert ? 'opacity-100' : 'opacity-0'}`}>“Thank you! We are gearing up.”</p>
+											<p className={`self-center ${alert ? 'opacity-100 mt-4 mb-2 text-sm lg:text-base lg:mt-0 lg:mb-0' : 'opacity-0'}`}>Thank you! We are gearing up.</p>
 										</div>
 									</div>
 								</DialogTitle>
@@ -326,7 +326,6 @@ export default function Page() {
 							height={40}
 						/>
 					</div>
-
 				</header>
 				{
 					currentStep != 6 ?
