@@ -404,10 +404,10 @@ export default function Page() {
 
 										}
 
-										<DialogContent className='rounded-xl p-0 ring-0 min-w-full md:max-w-1/2 md:min-w-1/2 max-h-1/2 md:max-h-full text-base bottom-0 md:bottom-auto left-0 md:left-1/2  translate-x-0 translate-y-0 md:-translate-x-1/2 md:-translate-y-1/2'>
+										<DialogContent className='rounded-xl p-0 ring-0 min-w-full md:max-w-1/2 md:min-w-1/2 min-h-150 md:max-h-full text-base bottom-0 md:bottom-auto left-0 md:left-1/2 top-auto md:top-1/2 translate-x-0 translate-y-0 md:-translate-x-1/2 md:-translate-y-1/2'>
 											<DialogTitle className=''>
 												<p className='mt-6 ml-9 text-2xl'>Platform & Placement</p>
-												<ScrollArea className='flex flex-col px-9 pb-0 md:pb-9 max-h-[53%] md:max-h-full'>
+												<ScrollArea className='flex flex-col px-9 pb-0 md:pb-9 max-h-130 md:max-h-full'>
 													<p className='font-semibold mb-4 mt-4'>Platforms</p>
 													<div className='flex flex-col md:flex-row gap-x-12'>
 														<div className='flex flex-1'>
@@ -420,7 +420,7 @@ export default function Page() {
 													<p className='font-semibold mb-6 mt-6'>Placements</p>
 													<div className='flex flex-col md:flex-row gap-x-12'>
 														<div className='flex flex-1 flex-col gap-y-2'>
-															<p className='font-semibold '>Feeds</p>
+															<p className='font-semibold mb-2 md:mb-2'>Feeds</p>
 															<p className='text-sm text-[#475569] flex-row'>&bull; Facebook Feed</p>
 															<p className='text-sm text-[#475569]'>&bull; Facebook profile Feed</p>
 															<p className='text-sm text-[#475569]'>&bull; Instagram Feed</p>
@@ -433,7 +433,7 @@ export default function Page() {
 															<p className='text-sm text-[#475569]'>&bull; Facebook Notifications</p>
 														</div>
 														<div className='flex flex-1 flex-col gap-y-2'>
-															<p className='font-semibold mt-6 mb-2 md:mt-0 md:mb-0'>Stories, Status, Reels</p>
+															<p className='font-semibold mt-6 mb-2 md:mt-0 md:mb-2'>Stories, Status, Reels</p>
 															<p className='text-sm text-[#475569]'>&bull; Instagram Stories</p>
 															<p className='text-sm text-[#475569]'>&bull; Facebook Stories</p>
 															<p className='text-sm text-[#475569]'>&bull; Messenger Stories</p>
