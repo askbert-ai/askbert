@@ -9,6 +9,7 @@ import TagSelector from '@/components/ui/tag-selector'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Check, CircleStar, ClipboardList, Lightbulb, MessageCircleQuestionMark, TrendingUp, UserRoundPlus, UserRoundSearch } from 'lucide-react'
 import { useContentCopilot } from '../_store/ContentCopilotStore'
+import { useState } from 'react'
 
 export default function StepPage() {
 
@@ -26,6 +27,8 @@ export default function StepPage() {
 			updateDisabledNext(false)
 		}
 	}
+const platforms = ['Facebook', 'Instagram'];
+	const [checkPlatforms, setCheckPlatforms] = useState<Set<string>>(new Set(["1"]))
 
 	if (currentStep == 1) {
 		return (
@@ -38,9 +41,9 @@ export default function StepPage() {
 				<div className='flex flex-col md:flex-row gap-6 md:gap-[94]'>
 					<Tooltip>
 						<TooltipTrigger>
-							<Card size="sm" className="w-fit max-w-[254] bg-gray-50 py-6 px-5 h-fit">
+							<Card size="sm" className="w-fit max-w-[254] bg-gray-100 py-6 px-5 h-fit">
 								<CardContent className='flex flex-col items-center '>
-									<div className='bg-primary/10 p-[32] rounded-[24] mb-6'>
+									<div className='bg-primary/50 p-[32] rounded-[24] mb-6'>
 										<UserRoundPlus size={64} color="#C8BFE1" strokeWidth={1} />
 									</div>
 									<p className='text-wrap text-xl font-semibold text-center mb-2'>
@@ -58,9 +61,9 @@ export default function StepPage() {
 					</Tooltip>
 					<Tooltip>
 						<TooltipTrigger>
-							<Card size="sm" className="w-fit max-w-[254] bg-gray-50 py-6 px-2 h-fit">
+							<Card size="sm" className="w-fit max-w-[254] bg-gray-100 py-6 px-2 h-fit">
 								<CardContent className='flex flex-col items-center '>
-									<div className='bg-primary/10 p-[32] rounded-[24] mb-6'>
+									<div className='bg-primary/50 p-[32] rounded-[24] mb-6'>
 										<ClipboardList size={64} color="#C8BFE1" strokeWidth={1} />
 									</div>
 									<p className='text-wrap text-xl font-semibold text-center mb-2'>
@@ -111,6 +114,7 @@ export default function StepPage() {
 		)
 	}
 
+	
 	if (currentStep == 3) {
 		return (
 			<>
@@ -120,7 +124,7 @@ export default function StepPage() {
 					<span>Check all that applies.</span>
 				</div>
 
-				<div className="flex gap-12 md:gap-24 md:min-w-[664]">
+				<div className="flex gap-4 md:gap-24 md:min-w-[664] text-base">
 
 					<div key='Platforms' className="flex-1 min-w-0">
 						<p className='font-semibold mb-6'>Platforms</p>
@@ -381,8 +385,8 @@ export default function StepPage() {
 				<>
 					<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
 						<span className="text-xl font-normal">PROCESSING</span>
-						<span className="text-4xl font-bold text-black">Analyzing your asset</span>
-						<span>This may take a while. Please wait..</span>
+						<span className="text-4xl font-bold text-black text-center">Analyzing your asset</span>
+						<span className='text-center'>This may take a while. Please wait..</span>
 					</div>
 					<div className="relative w-fit">
 						<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-bounce">
@@ -417,7 +421,7 @@ export default function StepPage() {
 			return (
 				<>
 					<div className="flex flex-col gap-2 mb-16 items-center mt-[40] text-[#475569]">
-						<span className="text-xl font-normal">BERHASIL</span>
+						<span className="text-xl font-normal">PROCESSING</span>
 						<span className="text-4xl font-bold text-black">Analyzing your asset</span>
 						<span>This may take a while. Please wait..</span>
 					</div>

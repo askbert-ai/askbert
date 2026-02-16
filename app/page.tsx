@@ -26,18 +26,19 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, BotMessageSquare, ChevronDown, ChevronUp, CloudUpload, Gem, House, Mail, MoveLeft, MoveRight, SendHorizontal, Sparkles, UsersRound, X } from 'lucide-react';
+import { ArrowRight, BotMessageSquare, ChevronDown, ChevronRight, ChevronUp, CircleSmall, CloudUpload, Gem, House, Mail, MoveLeft, MoveRight, SendHorizontal, Sparkles, UsersRound, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import StepPage from './_components/StepPage';
 import { useContentCopilot } from './_store/ContentCopilotStore';
 
 import { createClient } from '@/utils/supabase/client';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function Page() {
 	const supabase = createClient()
 	const { file, primaryObjective, campaignId, updateCampaignId, steps, currentStep, updateCurrentStep, disabledNext, disabledPrev, updateDisabledNext, hideButton, updateHideButton, primaryAudience, secondaryAudience, clearSecondaryAudience, updatePrimaryAudience } = useContentCopilot((state) => state)
-
+	const isMobile = useIsMobile()
 	const handleNext = () => {
 		if (currentStep < steps.length - 1) {
 			updateCurrentStep(currentStep + 1)
@@ -85,6 +86,10 @@ export default function Page() {
 	useEffect(() => {
 		scrollToTop()
 	}, [currentStep])
+
+	useEffect(() => {
+		return isMobile ? setHideChat(true) : setHideChat(hideChat)
+	}, [isMobile])
 
 	const [email, setEmail] = useState("");
 
@@ -159,7 +164,7 @@ export default function Page() {
 		if (currentStep == 6) {
 			const timer = setTimeout(() => {
 				setOpen(true) // Ganti dengan URL tujuan
-			}, 10000);
+			}, 25000);
 			return () => clearTimeout(timer);
 		}
 
@@ -223,7 +228,7 @@ export default function Page() {
 									</BreadcrumbLink>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator className="hidden md:block" />
-								<BreadcrumbItem>
+								<BreadcrumbItem className='hidden md:block'>
 									<BreadcrumbPage className="text-black font-medium">Upload an Asset</BreadcrumbPage>
 								</BreadcrumbItem>
 							</BreadcrumbList>
@@ -234,7 +239,7 @@ export default function Page() {
 							{
 								currentStep == 6 ?
 									<DialogTrigger asChild>
-										<Button className='h-fit rounded bg-[#C1FF72] text-black font-semibold py-2 px-6 hover:bg-[#C1FF72] mr-12'>Export Analysis</Button>
+										<Button className='h-fit rounded bg-[#C1FF72] text-black font-semibold py-2 px-6 hover:bg-[#C1FF72] mr-2 md:mr-12'>Export Analysis</Button>
 									</DialogTrigger>
 									: ''
 							}
@@ -355,37 +360,100 @@ export default function Page() {
 						</div>
 						:
 						<div className="flex flex-col md:flex-row justify-between h-full bg-[#FDFDFE]">
-							<div className='flex flex-col p-6'>
-								<div className='flex flex-row gap-12 mb-9'>
-									<div>
-										<p className='font-semibold'>Platform :</p>
-										<p className='text-[#475569]'>Facebook &middot; Instagram</p>
-									</div>
-									<div>
-										<p className='font-semibold'>Platform :</p>
-										<p className='text-[#475569]'>Facebook &middot; Instagram</p>
+							<div className="flex lg:flex-col flex-row p-3 md:p-6 gap-2 md:gap-12 md:mb-9">
+								<div className="max-w-1/3 md:max-w-full flex-1 order-1 lg:order-2 flex items-center justify-center">
+									{
+										file && file.type.startsWith('image/') ? (
+											<img
+												src={URL.createObjectURL(file)}
+												alt="Preview"
+												className="max-h-36 md:max-h-[556] w-full object-contain rounded-lg"
+												onLoad={() => URL.revokeObjectURL(URL.createObjectURL(file))} // Free memory
+											/>
+										)
+											: file && !file.type.startsWith('image/') ? (
+												<div className="max-h-36 md:max-h-[556] flex items-center justify-center bg-gray-100 rounded-lg">
+													<video controls className="w-full max-h-36 md:max-h-[556] object-contain">
+														<source src={URL.createObjectURL(file)} type={file.type} />
+														Browser Anda tidak mendukung tag video.
+													</video>
+												</div>
+											) : ''
+									}
+								</div>
+
+								<div className="flex flex-1 flex-col order-2 lg:contents max-w-fit">
+									<Dialog>
+										{
+
+											<DialogTrigger asChild>
+												<div className="flex-row md:gap-12 md:mb-9 flex-1 order-1 lg:order-1 flex  ">
+													<div>
+														<p className='text-xs md:text-base font-semibold'>Platform :</p>
+														<p className='text-[#475569] text-xs md:text-base'>Facebook &middot; Instagram</p>
+													</div>
+													<div>
+														<p className='font-semibold text-xs md:text-base'>Placement :</p>
+														<p className='text-[#475569] text-xs md:text-base'>Feeds &middot; Story, Status, Reels</p>
+													</div>
+													<div className='self-center' >
+														<ChevronRight color='#615C8B' size={24} />
+													</div>
+												</div>
+											</DialogTrigger>
+
+										}
+
+										<DialogContent className='rounded-xl p-0 ring-0 min-w-full md:max-w-1/2 md:min-w-1/2 max-h-1/2 md:max-h-full text-base bottom-0 md:bottom-auto left-0 md:left-1/2  translate-x-0 translate-y-0 md:-translate-x-1/2 md:-translate-y-1/2'>
+											<DialogTitle className=''>
+												<p className='mt-6 ml-9 text-2xl'>Platform & Placement</p>
+												<ScrollArea className='flex flex-col px-9 pb-0 md:pb-9 max-h-[53%] md:max-h-full'>
+													<p className='font-semibold mb-4 mt-4'>Platforms</p>
+													<div className='flex flex-col md:flex-row gap-x-12'>
+														<div className='flex flex-1'>
+															<p className='text-sm text-[#475569]'>&bull; Facebook</p>
+														</div>
+														<div className='flex flex-1'>
+															<p className='text-sm text-[#475569]'>&bull; Instagram</p>
+														</div>
+													</div>
+													<p className='font-semibold mb-6 mt-6'>Placements</p>
+													<div className='flex flex-col md:flex-row gap-x-12'>
+														<div className='flex flex-1 flex-col gap-y-2'>
+															<p className='font-semibold '>Feeds</p>
+															<p className='text-sm text-[#475569] flex-row'>&bull; Facebook Feed</p>
+															<p className='text-sm text-[#475569]'>&bull; Facebook profile Feed</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram Feed</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram profile Feed</p>
+															<p className='text-sm text-[#475569]'>&bull; Facebook Marketplace</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram Explore</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram Explore Home</p>
+															<p className='text-sm text-[#475569]'>&bull; Facebook Business Explore</p>
+															<p className='text-sm text-[#475569]'>&bull; Threads feed</p>
+															<p className='text-sm text-[#475569]'>&bull; Facebook Notifications</p>
+														</div>
+														<div className='flex flex-1 flex-col gap-y-2'>
+															<p className='font-semibold mt-6 mb-2 md:mt-0 md:mb-0'>Stories, Status, Reels</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram Stories</p>
+															<p className='text-sm text-[#475569]'>&bull; Facebook Stories</p>
+															<p className='text-sm text-[#475569]'>&bull; Messenger Stories</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram Reels</p>
+															<p className='text-sm text-[#475569]'>&bull; Instagram profile reels</p>
+															<p className='text-sm text-[#475569]'>&bull; Facebook Reels</p>
+														</div>
+													</div>
+												</ScrollArea>
+											</DialogTitle>
+										</DialogContent>
+									</Dialog>
+
+									<div className="flex-1 order-2 lg:order-3 flex items-center justify-center">
+										<Button onClick={() => window.location.reload()} className='h-fit w-full md:w-1/2 order-3 bg-[#C1FF72] text-black py-3 hover:bg-[#C1FF72] mt-6'><CloudUpload size={24} /> New Upload</Button>
 									</div>
 								</div>
-								{
-									file && file.type.startsWith('image/') ? (
-										<img
-											src={URL.createObjectURL(file)}
-											alt="Preview"
-											className="max-h-[556] w-full object-contain rounded-lg"
-											onLoad={() => URL.revokeObjectURL(URL.createObjectURL(file))} // Free memory
-										/>
-									)
-										: file && !file.type.startsWith('image/') ? (
-											<div className="max-h-[556] flex items-center justify-center bg-gray-100 rounded-lg">
-												<video controls className="w-full max-h-[556] object-contain">
-													<source src={URL.createObjectURL(file)} type={file.type} />
-													Browser Anda tidak mendukung tag video.
-												</video>
-											</div>
-										) : ''
-								}
-								<Button onClick={() => window.location.reload()} className='h-fit bg-[#C1FF72] text-black py-3 hover:bg-[#C1FF72] mt-6'><CloudUpload size={24} /> New Upload</Button>
 							</div>
+
+
 							{/* <div className='fixed bg-white right-0 bottom-0 top-16 w-80 border-l'> */}
 							<div className='flex md:max-h-[calc(100vh-var(--spacing)*16)] bottom-0 top-16 bg-white  md:w-80 md:border-l'>
 								{/* h-full */}
@@ -540,11 +608,14 @@ export default function Page() {
 							{
 								hideChat ?
 
-									<div onClick={onHideChat} className='sticky md:fixed w-full md:w-fit bottom-2 overflow-hidden right-0 md:bottom-4 md:right-80 '>
-										<div className='p-3 rounded-full bg-primary mr-3 hidden md:flex'>
-											<BotMessageSquare size={32} color='#615C8B' />
+									<div onClick={onHideChat} className='fixed w-fit bottom-2 overflow-hidden right-0 md:bottom-4 md:right-80 '>
+										<div className='p-3.5 rounded-full bg-primary mr-3 flex'>
+											<BotMessageSquare size={36} color='#615C8B' />
+											<div className='fixed flex justify-center  items-center bg-[#FD7272] h-4 w-4 rounded-full right-3 md:right-83 md:bottom-15 bottom-13'>
+												<p className='text-[10px] text-white'>1</p>
+											</div>
 										</div>
-										<div className='flex w-full flex-col justify-between md:hidden bg-white rounded-t-xl'>
+										{/* <div className='flex w-full flex-col justify-between md:hidden bg-white rounded-t-xl'>
 											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 rounded-t-xl px-6 py-4'>
 												<div className='flex flex-row items-center'>
 													<div className='p-1.5 rounded-full bg-primary mr-3'>
@@ -554,12 +625,12 @@ export default function Page() {
 												</div>
 												<ChevronUp onClick={onHideChat} size={24} color='#91A0B6' />
 											</div>
-										</div>
+										</div> */}
 									</div>
 									:
-									<div className='fixed right-0 bottom-0 md:right-80 h-96 md:w-80 shadow px-3 md:px-0 md:bg-white'>
-										<div className='flex h-full flex-col justify-between pb-3 bg-white rounded-t-xl'>
-											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 rounded-t-xl px-6 py-4'>
+									<div className='fixed z-10 top-0 md:top-auto right-0 bottom-0 md:right-80 md:h-96 md:w-80 shadow md:bg-white md:rounded-t-xl'>
+										<div className='flex h-full flex-col justify-between pb-3 bg-white md:rounded-t-xl'>
+											<div className='flex flex-row justify-between items-center bg-[#E2D7FE]/25 md:rounded-t-xl px-6 py-4'>
 												<div className='flex flex-row items-center'>
 													<div className='p-1.5 rounded-full bg-primary mr-3'>
 														<BotMessageSquare size={24} color='#615C8B' />
@@ -568,7 +639,7 @@ export default function Page() {
 												</div>
 												<ChevronDown onClick={onHideChat} size={24} color='#91A0B6' />
 											</div>
-											<ScrollArea className='h-56 px-2'>
+											<ScrollArea className='h-4/5 py-1 md:py-0 md:h-56 px-2'>
 												<div className='flex flex-row items-start mb-6'>
 													<div className='p-2 rounded-full bg-primary/25 mr-3'>
 														<BotMessageSquare size={24} color='#615C8B' />
@@ -601,7 +672,6 @@ export default function Page() {
 													<SendHorizontal size={24} color='#CEC4EC' />
 												</div>
 											</div>
-
 										</div>
 										<div className={`absolute bottom-0 right-0 z-2 backdrop-blur-sm w-full md:w-80 h-full ${subscribeChat ? 'w-80 h-full' : 'max-h-0 opacity-0 overflow-hidden'}`}>
 											<div className='flex h-full flex-col justify-end pb-11 px-3 z-11'>
