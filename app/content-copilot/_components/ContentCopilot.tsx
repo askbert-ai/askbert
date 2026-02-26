@@ -39,13 +39,6 @@ export default function ContentCopilot() {
 	// Default ke step pertama jika slug tidak ditemukan
 	const activeStep = activeIndex !== -1 ? STEPS[activeIndex] : STEPS[0];
 
-	// Handle initial redirect & reset jika user masuk tanpa query params
-	// useEffect(() => {
-	// 	if (!currentStepSlug) {
-	// 		reset();
-	// 		router.replace('/content-copilot?step=upload');
-	// 	}
-	// }, [currentStepSlug, reset, router]);
 	useEffect(() => {
 		if (currentStepSlug && currentStepSlug !== STEPS[0].url) {
 			reset();
