@@ -1,5 +1,5 @@
 // TagSelector.tsx
-import { useContentCopilot } from '@/app/_store/ContentCopilotStore';
+import { useContentCopilot } from '@/app/content-copilot/_store/ContentCopilotStore';
 import React from 'react';
 import TagButton from './tag-button';
 
@@ -14,18 +14,18 @@ const allTags: string[] = [ // array of strings explicitly typed
 const TagSelector: React.FC = () => {
 	// Status sekarang hanya menampung SATU string (atau null jika belum ada yang dipilih)
 	// const [selectedTag, setSelectedTag] = useState<string | null>(null);
-const { updatePrimaryAudience, primaryAudience, secondaryAudience} = useContentCopilot((state) => state)
-	
+	// const { updatePrimaryAudience, primaryAudience, secondaryAudience } = useContentCopilot((state) => state)
+	const { formData, updateData } = useContentCopilot()
 	const handleTagClick = (tag: string) => {
 		// Jika tag yang diklik sudah dipilih, batalkan pilihan (set ke null)
-		if (primaryAudience === tag) {
+		if (formData.primaryAudience === tag) {
 			// setSelectedTag(null);
-			updatePrimaryAudience('')
+			updateData({ primaryAudience: '' })
 		} else {
 			// Jika tag lain yang diklik, atur sebagai satu-satunya yang dipilih
 			// setSelectedTag(tag);
-			updatePrimaryAudience(tag)
-			
+			updateData({ primaryAudience: tag })
+
 		}
 	};
 
@@ -36,12 +36,12 @@ const { updatePrimaryAudience, primaryAudience, secondaryAudience} = useContentC
 			<div className="flex flex-wrap gap-3">
 				{allTags.map(tag => (
 					<TagButton
-					disabled={secondaryAudience.includes(tag)}
+						disabled={formData.secondaryAudience.includes(tag)}
 						key={tag}
 						tag={tag}
 						variant='primary'
 						// Periksa apakah tag saat ini sama persis dengan yang ada di state tunggal
-						isSelected={primaryAudience === tag}
+						isSelected={formData.primaryAudience === tag}
 						onClick={handleTagClick}
 					/>
 				))}

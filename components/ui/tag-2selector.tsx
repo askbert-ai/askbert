@@ -1,7 +1,7 @@
 // TagSelector.tsx
 import React, { useEffect, useState } from 'react';
 import TagButton from './tag-button';
-import { useContentCopilot } from '@/app/_store/ContentCopilotStore';
+import { useContentCopilot } from '@/app/content-copilot/_store/ContentCopilotStore';
 
 // Daftar tag diambil langsung dari teks yang terlihat di gambar
 const allTags: string[] = [ // array of strings explicitly typed
@@ -15,17 +15,17 @@ const Tag2Selector: React.FC = () => {
 	// Status menyimpan array tag yang dipilih
 	// const [selectedTags, setSelectedTags] = useState<string[]>([]);
 	const MAX_SELECTIONS = 2;
-	const { updateSecondaryAudience, removeSecondaryAudience, secondaryAudience, primaryAudience } = useContentCopilot((state) => state)
-
+	// const { updateSecondaryAudience, removeSecondaryAudience, secondaryAudience, primaryAudience } = useContentCopilot((state) => state)
+	const { formData, updateData } = useContentCopilot()
 	const handleTagClick = (tag: string) => {
-		if (secondaryAudience.includes(tag)) {
+		if (formData.secondaryAudience.includes(tag)) {
 			// Hapus tag jika sudah dipilih (toggle off)
-			removeSecondaryAudience(tag)
+			updateData({ secondaryAudience: formData.secondaryAudience.filter(t => t !== tag) })
 			// return prevSelected.filter(t => t !== tag);
 		} else {
 			// Tambahkan tag HANYA jika batas maksimum belum tercapai
-			if (secondaryAudience.length < MAX_SELECTIONS) {
-				updateSecondaryAudience(tag)
+			if (formData.secondaryAudience.length < MAX_SELECTIONS) {
+				updateData({ secondaryAudience: [...formData.secondaryAudience, tag] })
 				// return [...prevSelected, tag];
 			} else {
 				// Opsional: berikan umpan balik kepada pengguna bahwa batas telah tercapai
@@ -43,11 +43,11 @@ const Tag2Selector: React.FC = () => {
 			<div className="flex flex-wrap gap-3">
 				{allTags.map(tag => (
 					<TagButton
-					disabled={primaryAudience == tag}
+						disabled={formData.primaryAudience == tag}
 						key={tag}
 						tag={tag}
 						variant='secondary'
-						isSelected={secondaryAudience.includes(tag)}
+						isSelected={formData.secondaryAudience.includes(tag)}
 						onClick={handleTagClick}
 					/>
 				))}

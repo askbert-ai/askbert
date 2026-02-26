@@ -1,15 +1,14 @@
 'use client'
-import React, { useState, useRef, DragEvent } from 'react';
-import { CloudUpload, Image as ImageIcon, Video as VideoIcon, X } from 'lucide-react';
-import Image from 'next/image'
-import { useContentCopilot } from '@/app/_store/ContentCopilotStore';
+import { useContentCopilot } from '@/app/content-copilot/_store/ContentCopilotStore';
+import { Image as ImageIcon, Video as VideoIcon, X } from 'lucide-react';
+import Image from 'next/image';
+import React, { DragEvent, useRef, useState } from 'react';
+
 const UploadComponent: React.FC = () => {
-	const [file, setFile] = useState<File | null>(null);
 	const [isDragging, setIsDragging] = useState(false);
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const updateFile = useContentCopilot((state) => state.updateFile)
-	const fileUpload = useContentCopilot((state) => state.file)
 	const updateDisabledNext = useContentCopilot((state) => state.updateDisabledNext)
+	const { formData, updateData } = useContentCopilot()
 	const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(true);
@@ -22,8 +21,7 @@ const UploadComponent: React.FC = () => {
 		setIsDragging(false);
 		const files = e.dataTransfer.files;
 		if (files && files.length > 0) {
-			setFile(files[0]);
-			updateFile(files[0]);
+			updateData({ file: files[0] })
 			updateDisabledNext(false)
 		}
 	};
@@ -39,15 +37,13 @@ const UploadComponent: React.FC = () => {
 				e.target.value = ""; // Reset input
 				return;
 			}
-			setFile(files[0]);
-			updateFile(files[0]);
+			updateData({ file: files[0] })
 			updateDisabledNext(false)
 		}
 	};
 
 	const removeFile = () => {
-		setFile(null)
-		updateFile(null)
+		updateData({ file: null })
 		updateDisabledNext(true)
 	};
 
@@ -58,33 +54,30 @@ const UploadComponent: React.FC = () => {
 	};
 
 	// If a file is selected, show the preview
-	if (fileUpload) {
-		const isImage = fileUpload.type.startsWith('image/');
+	if (formData.file) {
+		const isImage = formData.file.type.startsWith('image/');
 		return (
 			<div
 				className={`min-w-full mx-auto justify-items-center border-2 border-dashed rounded-xl transition duration-300 border-primary bg-primary/10`}
 			>
 				<div className="relative w-fit">
 					{isImage ? (
-						<img
-							src={URL.createObjectURL(fileUpload)}
+						<Image
+							src={URL.createObjectURL(formData.file)}
 							alt="Preview"
 							className="max-h-[556] w-full object-contain rounded-lg"
-							onLoad={() => URL.revokeObjectURL(URL.createObjectURL(fileUpload))} // Free memory
+							width={500}
+							height={500}
+						// onLoad={() => formData.file ? URL.revokeObjectURL(URL.createObjectURL(formData.file)) : ''} // Free memory
 						/>
 					) : (
 						<div className="max-h-[556] flex items-center justify-center bg-gray-100 rounded-lg">
-							{/* <VideoIcon className="w-12 h-12 text-gray-400" />
-                <span className="ml-2 text-gray-600">Video Preview Not Available</span> */}
 							<video controls className="w-full max-h-[556] object-contain">
-								<source src={URL.createObjectURL(fileUpload)} type={fileUpload.type} />
-								Browser Anda tidak mendukung tag video.
+								<source src={URL.createObjectURL(formData.file)} type={formData.file.type} />
+								Browser Video Preview Not Available.
 							</video>
 						</div>
 					)}
-					{/* <button onClick={removeFile} className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100">
-            <X className="w-4 h-4" />
-          </button> */}
 					<button
 						onClick={removeFile}
 						className="absolute bottom-3 justify-self-end right-3 bg-gray-800 bg-opacity-65 hover:bg-gray-700 text-white text-xs font-semibold py-1.5 px-3 rounded-md flex items-center shadow-md"
@@ -98,7 +91,6 @@ const UploadComponent: React.FC = () => {
 		);
 	}
 
-	// Default Upload State (matching image style)
 	return (
 		<div
 			className={`min-w-full py-[130] mx-auto p-8 border-2 border-dashed rounded-xl transition duration-300 ${isDragging
@@ -117,9 +109,6 @@ const UploadComponent: React.FC = () => {
 				accept="image/*,video/*"
 			/>
 			<div className="flex flex-col text-center">
-				{/* <CloudUpload className="mx-auto h-[128] w-[128] text-purple-400 font-thin" /> */}
-				{/* <div className='mx-auto'> */}
-
 				<Image
 					src="/icon/cloud-upload.png"
 					alt="Askbert.ai"
@@ -127,13 +116,20 @@ const UploadComponent: React.FC = () => {
 					height={128}
 					className='mx-auto'
 				/>
-				{/* </div> */}
-				<p className="mt-2 text-sm text-gray-500">
-					Drag and drop your photo or video here, or click to
-				</p>
-				<p className=" text-sm text-gray-500">
-					browse files from your computer.
-				</p>
+				<div className='hidden md:inline justify-center'>
+					<p className="mt-2 text-sm text-gray-500">
+						Drag and drop your photo or video here, or click to
+					</p>
+					<p className="text-sm text-gray-500">
+						browse files from your computer.
+					</p>
+
+				</div>
+				<div className='md:hidden inline'>
+					<p className="mt-2 text-sm text-gray-500">
+						Choose your asset to upload.
+					</p>
+				</div>
 				<div className="mt-4 flex justify-center space-x-4">
 					<button
 						onClick={() => {

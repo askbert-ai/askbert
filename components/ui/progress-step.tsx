@@ -3,7 +3,6 @@ import React from 'react';
 
 interface StepProps {
 	label: string;
-	isCompleted: boolean;
 	isActive: boolean;
 	index: number
 }
@@ -22,21 +21,24 @@ const Step: React.FC<StepProps> = ({ isActive, index }) => {
 	)
 };
 
+type Step = {
+	url: string,
+	breadcrumb: string
+}
 interface ProgressStepsProps {
-	steps: string[];
-	currentStep: number;
+	steps: Step[];
+	currentStep: string;
 }
 
 const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => {
 	return (
-		<div className={`flex gap-4 ${currentStep > 4 ? 'opacity-0 overflow-hidden' : ''}`}>
+		<div className={`flex gap-4 ${currentStep == 'analyzing' ? 'opacity-0 overflow-hidden' : ''}`}>
 			{steps.map((step, index) => (
 				<Step
 					key={index}
-					label={step}
+					label={step.url}
 					index={index}
-					isCompleted={index < currentStep}
-					isActive={index === currentStep}
+					isActive={step.url === currentStep}
 				/>
 			))}
 		</div>

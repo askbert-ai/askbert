@@ -1,10 +1,30 @@
 'use client'
 import { create } from 'zustand'
 
+type FormData = {
+	file: File | null,
+	primaryAudience: string
+	secondaryAudience: string[]
+	primaryObjective: string
+	campaignId: string
+	emailCampaign: string
+	asset: string
+}
+
+const initialState: FormData = {
+	file: null,
+	primaryAudience: '',
+	secondaryAudience: [],
+	primaryObjective: '',
+	campaignId: '',
+	emailCampaign: '',
+	asset: ''
+};
+
 type ContentCopilotState = {
-	steps: string[];
-	currentStep: number;
-	updateCurrentStep: (payload: number) => void
+	formData: FormData;
+	updateData: (newData: Partial<FormData>) => void;
+	reset: () => void;
 	disabledNext: boolean
 	disabledPrev: boolean
 	updateDisabledNext: (payload: boolean) => void
@@ -28,9 +48,6 @@ type ContentCopilotState = {
 
 }
 export const useContentCopilot = create<ContentCopilotState>((set) => ({
-	steps: ['Upload An Asset', 'Audience Segment', 'Sub Audience Segment', 'Platform and Placement', 'Set a Goal', 'Analyzing Asset', 'Content Analysis'],
-	currentStep: 0,
-	updateCurrentStep: (newStep) => set({ currentStep: newStep }),
 	disabledNext: true,
 	disabledPrev: false,
 	updateDisabledNext: (isDisabled) => set({ disabledNext: isDisabled }),
@@ -53,7 +70,14 @@ export const useContentCopilot = create<ContentCopilotState>((set) => ({
 	primaryObjective: '',
 	updatePrimaryObjective: (newPrimaryObjective) => set({ primaryObjective: newPrimaryObjective }),
 	campaignId: '',
-	updateCampaignId : (newCampaignId) => set({ campaignId: newCampaignId }),
+	updateCampaignId: (newCampaignId) => set({ campaignId: newCampaignId }),
 	emailCampaign: '',
-	updateEmailCampaign : (newEmailCampaign) => set({ emailCampaign: newEmailCampaign }),
+	updateEmailCampaign: (newEmailCampaign) => set({ emailCampaign: newEmailCampaign }),
+
+	formData: initialState,
+	updateData: (newData) =>
+		set((state) => ({
+			formData: { ...state.formData, ...newData },
+		})),
+	reset: () => set({ formData: initialState }),
 }))
